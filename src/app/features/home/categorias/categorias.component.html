@@ -1,0 +1,80 @@
+<div class="p-5">
+    <button type="button"
+            class="btn btn-primary mb-2"
+            (click)="onClickShowForm()">
+        Agregar Categoria
+    </button>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Fecha de creacion</th>
+                <th>Fecha de actualizacion</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let item of categories">
+                <tr>
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.status ? 'Activo' : 'Inactivo'}}</td>
+                    <td>{{item.created}}</td>
+                    <td>{{item.updated}}</td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal"
+     tabindex="-1"
+     id="formulario-registro-categories">
+    <div class="modal-dialog"
+         [formGroup]="form">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- {{form.value|json}} -->
+                <p class="mb-1">Modal body text goes here.</p>
+                <!-- {{ form.controls['name'].errors | json }} -->
+                <input type="text"
+                       class="form-control"
+                       [disabled]="isLoading"
+                       formControlName="name">
+                <ng-container *ngIf="form.controls['name'].dirty">
+                    {{ renderError(form.controls['name'].errors)}}
+                </ng-container>
+
+                <p class="mb-1">Modal body text goes here.</p>
+                <!-- {{ form.controls['lastName'].errors | json }} -->
+                <input type="text"
+                       class="form-control"
+                       [disabled]="isLoading"
+                       formControlName="lastName"
+                       (keypress)="onKeypressLastName($event)">
+                <ng-container *ngIf="form.controls['lastName'].dirty">
+                    {{renderError(form.controls['lastName'].errors)}}
+                </ng-container>
+                <!-- [(ngModel)]="name" -->
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                        [disabled]="isLoading">Close</button>
+                <button type="button"
+                        class="btn btn-primary"
+                        [disabled]="isLoading || form.invalid"
+                        (click)="onClickSave()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+<div class="p-5">
+    <button type="button"
+            class="btn btn-primary mb-2"
+            (click)="onClickShowForm()">
+        Agregar Cliente
+    </button>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                <th>Teléfono</th>
+                <th>Estado</th>
+                <th>Fecha de creacion</th>
+                <th>Fecha de actualizacion</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let item of clientes">
+                <tr>
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.surnames}}</td>
+                    <td>{{item.email}}</td>
+                    <td>{{item.phone}}</td>
+                    <td>{{item.status ? 'Activo' : 'Inactivo'}}</td>
+                    <td>{{item.created}}</td>
+                    <td>{{item.updated}}</td>
+                    <td><span style="cursor:pointer;color:blue;" (click)="eliminarCliente(item.id)">Eliminar</span></td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal"
+     tabindex="-1"
+     id="formulario-registro-clientes">
+    <div class="modal-dialog"
+         [formGroup]="form">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">CLIENTES</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-1">Nombre</p>
+                <input type="text"
+                       class="form-control"
+                       [disabled]="isLoading"
+                       formControlName="name">
+
+                <p class="mb-1">Apellido</p>
+                <input type="text"
+                       class="form-control"
+                       [disabled]="isLoading"
+                       formControlName="surnames">
+                
+                <p class="mb-1">Correo</p>
+                <input type="text"
+                        class="form-control"
+                        [disabled]="isLoading"
+                        formControlName="surnames">
+
+                <p class="mb-1">Teléfono</p>
+                <input type="text"
+                        class="form-control"
+                        [disabled]="isLoading"
+                        formControlName="surnames">
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                        [disabled]="isLoading">Close</button>
+                <button type="button"
+                        class="btn btn-primary"
+                        [disabled]="isLoading || form.invalid"
+                        (click)="onClickSave()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
